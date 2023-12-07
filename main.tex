@@ -11,6 +11,8 @@
 \usepackage{tikz}
 \usepackage{tikz-cd}
 
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm]{geometry}
+
 \newtheorem{thm}{Theorem}
 \newtheorem{defi}[thm]{Definition}
 \newtheorem{cor}[thm]{Corollary}
@@ -21,6 +23,7 @@
 \newcommand{\ord}{\mathcal{O}}
 \newcommand{\mn}{\mu_{n}}
 \newcommand{\kmkn}{K ^{\times} / (K ^{\times})^{n}}
+\newcommand{\kvmkn}[1]{(#1) ^{\times} / ((#1) ^{\times})^{n}}
 
 \DeclareMathOperator{\hhom}{Hom}
 \DeclareMathOperator{\spec}{Specm}
@@ -32,15 +35,24 @@
 \begin{document}
 \maketitle
 
+\paragraph{Notation}
+For a group $ G $, denote $ G [n] $ the $ n $-torsion of $ G $.
+We distinguish between canonical and non-canonical isomorphisms in the same way as Milne does.
+But I write $ = $ for canonical isomorphisms, and $ \cong $ for non-canonical ones.
+This is slightly abusive since $ = $ doen't neccessarily mean up to contractible choice...
+
 \paragraph{Setup}
 $ K $ a number field, $ E $ an ellipic curve over $ K $.
 Fix an algebraic closure $ \overline{K} $ of $ K $,
 and algebraic extensions of $ K $ means a subfield of $ \overline{K} $.
 $ \spec \ord _{K} $ denotes the set of finite places of $ K $.
+Denote $ K _{v} $ the completion of $ K $ at $ v $.
 For each $ v\in \spec \ord _{K} $, choose a place
 $ \overline{v}\in \spec \ord _{\overline{K}} $ extending $ v $,
 and identify the absolute Galois group of $ K _{v} $ with
 the decomposition group of $ \overline{v}/v $.
+Let $ K _{v}^{nr} $ denote the maximal unramified extension of $ K _{v} $
+inside $ \overline{K}_{\overline{v}} $.
 Fix $ n \geq 2 $ a positive integer.
 
 Recall that in order to prove the weak Mordell-Weil conjecture,
@@ -53,6 +65,7 @@ and wished that it's finite.
 
 We start with something much simpler than an elliptic curve, i.e. $ \mathbb{G}_{m} $.
 Note that $ \mathbb{G}_{m}(K) = K ^{\times} $ is of course not finitely generated.
+(In fact here we should consider $ \mathbb{G}_{m}(\ord _{K}) $, which is finitely generated)
 
 Consider the short exact sequence
 $$ 0 \to \mn \to \overline{K}^{\times} \xrightarrow{n} \overline{K}^{\times}\to 0 $$
@@ -150,11 +163,155 @@ So if we can prove that $ \mathrm{Sel}^{n}(E/K (E [n])) $ is finite,
 then we have $ \mathrm{Sel}^{n}(E/K) $ is finite.
 From now on we assume that $ E [n]\subset E (K) $.
 \begin{rmk}
-If you don't like Weil pairing, you can take $ \mn \subset K ^{\times} $ as an
+If you don't like the Weil pairing, you can take $ \mn \subset K ^{\times} $ as an
 additional assumption that doesn't hurt.
 \end{rmk}
 
-\section{Proof}
+\section{Solving locally}
+
+You might have been asking,
+"why the f**k do we care about the Selmer groups"?
+The point is that, solving equations in $ K _{v} $ is much easier that
+solving in $ K $.
+We might hope that some point $ Q \in E (K)$ to be in $ nE (K _{v}) $ when it's not in $ n E (K) $.
+
+Recall that we have the commutative diagram in which the rows are exact
+\begin{figure}[H]
+\centering
+\begin{tikzcd}
+0 \arrow[r]
+& E(K)/nE(K) \arrow[d, "\mathrm{res}"] \arrow[r]
+& H^1 (K, E[n]) \arrow[d, "\mathrm{res}"]\\
+0 \arrow[r]
+& E(K_v)/nE(K_v) \arrow[r]
+& H^1 (K_v, E[n])
+\end{tikzcd}
+
+\end{figure}
+
+Now suppose that $ \gamma\in \mathrm{Sel}^{n}(E/K) $.
+Then $ \mathrm{res}(\gamma) $ lies in the image of $ E (K _{v})/n E (K _{v}) $.
+Say it's the image of $ Q\in E (K _{v}) $.
+
+A very nice property of the local field is that,
+although $ Q $ is not neccessarily in $ n E (K _{v}) $,
+the extension $ K _{v}\left(\frac{Q}{n}\right) $ is unramified over $ K _{v} $
+under some genericity condition on $ v $.
+More precisely,
+
+\begin{thm}
+There is a finite $ S\subset \spec \ord _{K} $ such that
+if $ v\not\in S $ and $ Q\in E (K _{v}) $,
+then $ Q\in n E (K _{v}^{nr}) $.
+\end{thm}
+
+This is essentially Hensel's lemma combined with the fact that
+if $ k $ is any algebraically closed field and
+$ E/k $ an elliptic curve,
+then $ n: E (k)\to E (k) $ is surjective.
+Now we work rigorously.
+
+For the moment let $ F $ be a 
+complete nonarchimedean discretely valued field of characteristic $ 0 $,
+with a perfect residue field $ k $ of characteristic $ p $.
+%We start with a version of Hensel's lemma
+%\begin{prop}
+%Let $ G _{1},\ldots,G _{r}\in \ord _{F}[x _{1}, \ldots, x _{r}] $ and
+%$ y _{1},\ldots, y _{r}\in k $ be a set of solutions of
+%$ \overline{G _{1}},\ldots,\overline{G _{r}} $.
+%If $ \ \det \mathrm{Jab}(G _{i})(y _{i}) \neq 0 $ in $ k $,
+%then there are uniquely determined $ z _{1},\ldots,z _{r}\in \ord _{F} $
+%such that $ z _{i} $ maps to $ y _{i} $ under reduction modulo $ \mathfrak{m}_{F} $,
+%and $ G _{i}(z _{1},\ldots,z _{r})=0 $ for all $ i $.
+%\end{prop}
+%The proof that I'm not going to give here is by Newton iteration. The assumption on the
+%Jacobian matrix ensures that the iteration is possible,
+%and it's always convergent since we're in nonarchimedean situation.
+
+\begin{prop}
+Suppose that $ E $ has good reduction modulo $ \mathfrak{m}_{F} $,
+and $ p\nmid n $.
+Then the multiplication by $ n $ map on $ E (F ^{nr}) $ is surjective.
+\end{prop}
+
+\begin{proof}
+We have the following commutative diagram with exact rows
+\begin{figure}[H]
+\centering
+\begin{tikzcd}
+0 \arrow[r]
+& E^1(F^{nr}) \arrow[r] \arrow[d, "n"]
+& E(F^{nr}) \arrow[r] \arrow[d, "n"]
+& E(\overline{k}) \arrow[r] \arrow[d, "n"]
+& 0\\
+0 \arrow [r]
+& E^1(F^{nr}) \arrow[r]
+& E(F^{nr}) \arrow[r]
+& E(\overline{k}) \arrow[r]
+& 0
+\end{tikzcd}
+\end{figure}
+The left vertical map is an isomorphism as $ p\nmid n $,
+the right vertical map is surjective since maps between curves over an algebraically closed
+field is either surjective or has image a point.
+Then an application of the snake lemma shows that the middle vertical map is also surjective.
+\end{proof}
+
+Now we can prove the theorem
+\begin{proof}
+[Proof of the theorem]
+Let $ S = \{v\mid 2, v\mid 3, v\mid n, E \text{ has bad reduction at } v\} $.
+Then $ S $ is finite.
+If $ v\not\in S $, then we may use the above proposition to obtain that
+$ n: E (K _{v}^{nr})\to E (K _{v}^{nr}) $ is surjective.
+\end{proof}
+
+\section{Now the Selmer groups}
+
+Now we prove that Selmer groups are finite.
+
+\begin{thm}
+$ \mathrm{Sel}^{n}(E/K) $ is finite.
+\end{thm}
+
+\begin{proof}
+Consider the following commutative diagram with exact rows
+\begin{figure}[H]
+\centering
+\begin{tikzcd}
+0 \arrow[r]
+& E(K)/nE(K) \arrow[r] \arrow[d, "\mathrm{res}"]
+& H^1(K, E[n]) \arrow[r, "\cong"] \arrow[d, "\mathrm{res}"]
+& \kmkn \times \kmkn\arrow[d]\\
+0 \arrow[r]
+& E(K_v)/nE(K_v) \arrow[r] \arrow[d, "\mathrm{res}"]
+& H^1(K_v, E[n]) \arrow[r, "\cong"] \arrow[d, "\mathrm{res}"]
+& \kvmkn{K_v} \times \kvmkn{K_v}\arrow[d]\\
+0 \arrow[r]
+& E(K_v^{nr})/nE(K_v^{nr}) \arrow[r]
+& H^1(K_v^{nr}, E[n]) \arrow[r, "\cong"]
+& \kvmkn{K_v^{nr}} \times \kvmkn{K_v^{nr}}
+\end{tikzcd}
+
+\end{figure}
+where $ v\not\in S $.
+Let $ \gamma\in \mathrm{Sel}^{n}(E/K) $, which corresponds to $ (\gamma _{1}, \gamma _{2}) $
+under the last isomorphism on the first line.
+Then by assumption, there is some $ Q\in E (K _{v}) $ mapping to 
+$ \mathrm{res}(\gamma)\in H ^{1}(K _{v}, E [n]) $.
+But the image of $ Q $ is $ 0 $ in the third line, and so is $ \gamma $.
+So in the end, we have that $ n\mid v (\gamma _{1}), n\mid v (\gamma _{2}) $.
+
+Consider the maps
+$$ t _{i} = \mathrm{Sel}^{n}(E/K) \to \kmkn \times
+\kmkn \xrightarrow{\pi _{i}} \kmkn \to \biguplus _{v\in \spec \ord _{K}} (\mathbb{Z}/n \mathbb{Z})v$$
+where $ i=1,2 $.
+The image of $ t _{i} $ is finite since it maps into $ \bigoplus _{v\in S}
+(\mathbb{Z}/n \mathbb{Z})v$.
+Then we conclude that
+the images of $ \mathrm{Sel}^{n}(E/K) $ in the two factors of $\kmkn\times \kmkn $ are finite.
+Then $ \mathrm{Sel}^{n}(E/K) $ is finite.
+\end{proof}
 
 \end{document}
 
