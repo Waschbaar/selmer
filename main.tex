@@ -1,0 +1,161 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{defi}[thm]{Definition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+
+\newcommand{\ord}{\mathcal{O}}
+\newcommand{\mn}{\mu_{n}}
+\newcommand{\kmkn}{K ^{\times} / (K ^{\times})^{n}}
+
+\DeclareMathOperator{\hhom}{Hom}
+\DeclareMathOperator{\spec}{Specm}
+
+\title{Selmer groups are finite}
+\author{Xiaomin Chu}
+\date{Nov 2023}
+
+\begin{document}
+\maketitle
+
+\paragraph{Setup}
+$ K $ a number field, $ E $ an ellipic curve over $ K $.
+Fix an algebraic closure $ \overline{K} $ of $ K $,
+and algebraic extensions of $ K $ means a subfield of $ \overline{K} $.
+$ \spec \ord _{K} $ denotes the set of finite places of $ K $.
+For each $ v\in \spec \ord _{K} $, choose a place
+$ \overline{v}\in \spec \ord _{\overline{K}} $ extending $ v $,
+and identify the absolute Galois group of $ K _{v} $ with
+the decomposition group of $ \overline{v}/v $.
+Fix $ n \geq 2 $ a positive integer.
+
+Recall that in order to prove the weak Mordell-Weil conjecture,
+we intruduced the Selmer groups
+$$ \mathrm{Sel}^{(n)}(E) = \ker H ^{1}(K, E [n])\to
+\prod _{v\in \spec \ord _{K}} H ^{1}(K _{v}, E (\overline{K _{v}})) $$
+and wished that it's finite.
+
+\section{For $ \mathbb{G}_{m} $}
+
+We start with something much simpler than an elliptic curve, i.e. $ \mathbb{G}_{m} $.
+Note that $ \mathbb{G}_{m}(K) = K ^{\times} $ is of course not finitely generated.
+
+Consider the short exact sequence
+$$ 0 \to \mn \to \overline{K}^{\times} \xrightarrow{n} \overline{K}^{\times}\to 0 $$
+We may extract the following exact sequence from the cohomological long exact sequence
+$$ 0\to \kmkn \to H ^{1}(K, \mn)\to H ^{1}(K, \overline{K}^{\times})[n]\to 0  $$
+But Hilbert 90 says that $ H ^{1}(K, \overline{K}^{\times}) = 0 $,
+so actually $ \kmkn = H ^{1}(K, \mn) $.
+
+$ \kmkn $ is approximately $ \bigoplus _{v\in\spec \ord _{K}} \mathbb{Z}v $.
+To make it precise, we use the celebrated exact sequence in algebraic number theory
+$$ 0\to \ord _{K}^{\times} \to K ^{\times}\to \bigoplus _{v\in \spec \ord _{K}} \mathbb{Z}v 
+\to \mathrm{Cl}(K)\to 0$$
+where $ \mathrm{Cl}(K) $, the ideal class group of $ K $, is finite.
+Applying the snake lemma to
+\begin{figure}[H]
+\centering
+\begin{tikzcd}
+\quad  
+&K ^{\times} \arrow[r] \arrow[d, "n"]
+&\bigoplus _{v\in\spec \ord _{K}} \mathbb{Z}v \arrow[r] \arrow[d, "n"]
+&\mathrm{Cl}(K) \arrow[r] \arrow[d, "n"]
+& 0\\
+0 \arrow[r]
+&K ^{\times}/\ord _{K}^{\times} \arrow[r] 
+&\bigoplus _{v\in\spec \ord _{K}} \mathbb{Z}v \arrow[r]
+&\mathrm{Cl}(K)
+& \quad
+\end{tikzcd}
+\end{figure}
+gives us the exact sequence
+$$ \mathrm{Cl}(K)[n] \to K ^{\times}/(\ord _{K}^{\times} (K ^{\times})^{n})\to
+\bigoplus _{v\in \spec \ord _{K}} (\mathbb{Z}/n \mathbb{Z}) v \to
+\mathrm{Cl}(K)/n \mathrm{Cl}(K)$$
+
+But Dirichlet's unit theorem says that
+$ \ord _{K}^{\times} $ is a finitely generated abelian group,
+so $ \kmkn $ isn't much different from $ K ^{\times}/(\ord _{K}^{\times} (K ^{\times})^{n}) $.
+To be more precise, we have the following exact sequence
+$$ 0\to \ord _{K}^{\times}/ (\ord _{K}^{\times})^{n} \to
+\kmkn \to K ^{\times}/(\ord _{K}^{\times} (K ^{\times})^{n})\to 0$$
+
+To summurize the discussion above, we have
+\begin{thm}
+There are two finite groups $ R _{1}(K, n), R _{2}(K, n) $ such that
+$$ R _{1}(K, n)\to \kmkn \to  
+\bigoplus _{v\in \spec \ord _{K}} (\mathbb{Z}/n \mathbb{Z}) v \to R _{2}(K, n) $$
+is exact.
+\end{thm}
+In particular,
+\begin{cor}
+If $ S $ is a subgroup of $ \kmkn $ whose image in
+$ \bigoplus _{v\in \spec \ord _{K}} (\mathbb{Z}/n \mathbb{Z}) v$ is finite,
+then $ S $ is finite.
+\end{cor}
+
+\begin{proof}
+$ S $ is an extension of its image in
+$ \bigoplus _{v\in \spec \ord _{K}} (\mathbb{Z}/n \mathbb{Z}) v$ and a subgroup of
+$ R _{1}(K, n) $.
+\end{proof}
+
+\section{Reducing to $ E [n]\subset E (K) $}
+
+In general $ E $ is very different from $ \mathbb{G}_{m}\times \mathbb{G}_{m} $.
+But we can compare their $ H ^{1} $ somehow forcefully.
+Suppose that $ E [n] \subset E (K) $, then $ G _{K} $ acts trivially on $ E [n] $.
+Then $ H ^{1}(K, E [n]) \cong \hhom (G _{K}, \mathbb{Z}/n \mathbb{Z} \times \mathbb{Z}/n \mathbb{Z})$
+by choosing a basis $ (a, b) $ of $ E [n] $.
+In this case, Weil pairing implies that $ \mn \subset K ^{\times} $.
+So we have
+$$ H ^{1}(K, E [n]) \cong \hhom (G _{K}, \mathbb{Z}/n \mathbb{Z})\times
+\hhom (G _{K}, \mathbb{Z}/n \mathbb{Z})\cong H ^{1}(K, \mn)\times H ^{1}(K, \mn)
+$$
+Which then equals $ \kmkn\times \kmkn $.
+This is very nice.
+
+Now we reduce to this situation.
+\begin{prop}
+Suppose $ L/K $ is a finite Galois extension.
+If $ \mathrm{Sel}^{n}(E/L) $ is finite, then
+$ \mathrm{Sel}^{n}(E/K) $ is also finite.
+\end{prop}
+
+\begin{proof}
+We have the inflation-restriction exact sequence
+$$ 0\to H ^{1}(G _{L/K}, E [n](L))\xrightarrow{\mathrm{Inf}}
+H ^{1}(K, E [n]) \xrightarrow{\mathrm{Res}}
+H ^{1}(L, E [n])$$
+and $ H ^{1}(G _{L/K}, E [n](L)) $ is clearly finite.
+So $ \mathrm{res}: \mathrm{Sel}^{n}(E/K)\to \mathrm{Sel}^{n}(E/L)^{G _{L/K}} $
+has finite kernel.
+\end{proof}
+
+So if we can prove that $ \mathrm{Sel}^{n}(E/K (E [n])) $ is finite,
+then we have $ \mathrm{Sel}^{n}(E/K) $ is finite.
+From now on we assume that $ E [n]\subset E (K) $.
+\begin{rmk}
+If you don't like Weil pairing, you can take $ \mn \subset K ^{\times} $ as an
+additional assumption that doesn't hurt.
+\end{rmk}
+
+\section{Proof}
+
+\end{document}
+
+
