@@ -112,13 +112,13 @@ To summurize the discussion above, we have
 There are two finite groups $ R _{1}(K, n), R _{2}(K, n) $ such that
 $$ R _{1}(K, n)\to \kmkn \to  
 \bigoplus _{v\in \spec \ord _{K}} (\mathbb{Z}/n \mathbb{Z}) v \to R _{2}(K, n) $$
-is exact.
+is exact.\label{comparison:h1}
 \end{thm}
 In particular,
 \begin{cor}
 If $ S $ is a subgroup of $ \kmkn $ whose image in
 $ \bigoplus _{v\in \spec \ord _{K}} (\mathbb{Z}/n \mathbb{Z}) v$ is finite,
-then $ S $ is finite.
+then $ S $ is finite. \label{subgrp:finite}
 \end{cor}
 
 \begin{proof}
@@ -126,6 +126,55 @@ $ S $ is an extension of its image in
 $ \bigoplus _{v\in \spec \ord _{K}} (\mathbb{Z}/n \mathbb{Z}) v$ and a subgroup of
 $ R _{1}(K, n) $.
 \end{proof}
+
+\subsection{Aside: Selmer groups for $ \mathbb{G}_{m} $}
+
+We may define the Selmer groups for $ \mathbb{G}_{m} $ as well.
+Here we need to consider its points over $ \ord _{K} $ instead of $ K $.
+In fact we're also considering the points over $ \ord _{K} $ for elliptic curves,
+but elliptic curves are projective so we can rescale the coordinates...
+
+Consider the exact sequence
+$$ 0\to \mn\to \ord _{\overline{K}}^{\times}\xrightarrow{n} \ord _{\overline{K}}^{\times}\to 0 $$
+Again extract from the cohomological long exact sequence the following
+$$ 0\to \ord _{K}^{\times}/(\ord _{K}^{\times})^{n}
+\to H ^{1}(K, \mn)\to H ^{1}(K, \ord _{\overline{K}}^{\times})[n]\to 0$$
+
+Define $ \mathrm{Sel}^{n}(\mathbb{G}_{m}/\ord _{K}) $ to be 
+$$ \mathrm{Sel}^{n}(\mathbb{G}_{m}/\ord _{K}) =
+\ker H ^{1}(K, \mn)\to \prod _{v\in\spec \ord _{K}} H ^{1}(K _{v}, \ord _{\overline{K}_{v}}^{\times}) $$
+
+We can prove that $ \mathrm{Sel}^{n}(\mathbb{G}_{m}/\ord _{K}) $ is finite using the method that's
+going to be applied to elliptic curves later.
+The proof is listed here as an illustration of the method.
+\begin{thm}
+$ \mathrm{Sel}^{n}(\mathbb{G}_{m}/\ord _{K}) $ is finite.
+\end{thm}
+
+\begin{proof}
+Let $ \gamma\in \mathrm{Sel}^{n}(\mathbb{G}_{m}/\ord _{K}) $ corresponds to
+$ \alpha\in \kmkn $ under the (canonial) isomorphism $ H ^{1}(K, \mn)\to \kmkn $.
+Then for all $ v\in \spec\ord _{K} $, there is an element $ \beta\in
+\ord _{K}^{\times}/(\ord _{K}^{\times})^{n}$ mapping to $ \alpha $.
+
+If the residue characteristic of $ v $ doesn't divide $ n $,
+then Hensel's lemma gives a $ \xi\in \ord _{K _{v}^{nr}}^{\times} $ such that
+$ \xi ^{n} = \beta $.
+Then $ \alpha $ is mapped to the image of $ \xi ^{n} = 0 $ upon further restricting to
+$ \kvmkn{K _{v}^{nr}} $.
+But the restriction maps are natural inclusions under the isomorphism,
+so $ \alpha $ is a $ n $-th power in $ K _{v}^{nr} $.
+So actually $ n\mid v (\alpha)$.
+Since this is true for all $ v\nmid n $,
+the image of $ \mathrm{Sel}^{n}(\mathbb{G}_{m}/\ord _{K}) $,
+under the map $ \kmkn \to \bigoplus _{v\in \spec \ord _{K}} (\mathbb{Z}/n \mathbb{Z})v $,
+lies in the subgroup
+$ \bigoplus _{v\mid n} (\mathbb{Z}/n \mathbb{Z})v $, which is finite.
+By Corollary \ref{subgrp:finite}, $ \mathrm{Sel}^{n}(\mathbb{G}_{m}/\ord _{K}) $ is finite. 
+\end{proof}
+
+Note however that we can't reprove Dirichlet's unit theorem from this perspective
+since we used it in proving Theorem \ref{comparison:h1}.
 
 \section{Reducing to $ E [n]\subset E (K) $}
 
