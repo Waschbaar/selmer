@@ -30,7 +30,7 @@
 
 \title{Selmer groups are finite}
 \author{Xiaomin Chu}
-\date{Nov 2023}
+\date{Dec 2023}
 
 \begin{document}
 \maketitle
@@ -65,7 +65,8 @@ and wished that it's finite.
 
 We start with something much simpler than an elliptic curve, i.e. $ \mathbb{G}_{m} $.
 Note that $ \mathbb{G}_{m}(K) = K ^{\times} $ is of course not finitely generated.
-(In fact here we should consider $ \mathbb{G}_{m}(\ord _{K}) $, which is finitely generated)
+(In fact here we should consider $ \mathbb{G}_{m}(\ord _{K}) $, which is finitely generated.
+More on this later.)
 
 Consider the short exact sequence
 $$ 0 \to \mn \to \overline{K}^{\times} \xrightarrow{n} \overline{K}^{\times}\to 0 $$
@@ -130,8 +131,8 @@ $ R _{1}(K, n) $.
 \subsection{Aside: Selmer groups for $ \mathbb{G}_{m} $}
 
 We may define the Selmer groups for $ \mathbb{G}_{m} $ as well.
-Here we need to consider its points over $ \ord _{K} $ instead of $ K $.
-In fact we're also considering the points over $ \ord _{K} $ for elliptic curves,
+Here we need to consider its points over $ \ord _{K} $ instead of over $ K $.
+In fact that's also what happens for elliptic curves,
 but elliptic curves are projective so we can rescale the coordinates...
 
 Consider the exact sequence
@@ -188,8 +189,8 @@ So we have
 $$ H ^{1}(K, E [n]) \cong \hhom (G _{K}, \mathbb{Z}/n \mathbb{Z})\times
 \hhom (G _{K}, \mathbb{Z}/n \mathbb{Z})\cong H ^{1}(K, \mn)\times H ^{1}(K, \mn)
 $$
-Which then equals $ \kmkn\times \kmkn $.
-This is very nice.
+Which then equals $ \kmkn\times \kmkn $. The last isomorphism involves
+choosing a primitive $ n $-th root of unity, so it's also non-canonical.
 
 Now we reduce to this situation.
 \begin{prop}
@@ -212,17 +213,18 @@ So if we can prove that $ \mathrm{Sel}^{n}(E/K (E [n])) $ is finite,
 then we have $ \mathrm{Sel}^{n}(E/K) $ is finite.
 From now on we assume that $ E [n]\subset E (K) $.
 \begin{rmk}
-If you don't like the Weil pairing, you can take $ \mn \subset K ^{\times} $ as an
-additional assumption that doesn't hurt.
+If you're not happy with the Weil pairing, you can take $ \mn \subset K ^{\times} $ as an
+additional assumption. This doesn't hurt by the proposition above.
 \end{rmk}
 
 \section{Solving locally}
 
 You might have been asking,
-"why the f**k do we care about the Selmer groups"?
+"why do we care about the Selmer groups"?
 The point is that, solving equations in $ K _{v} $ is much easier that
 solving in $ K $.
-We might hope that some point $ Q \in E (K)$ to be in $ nE (K _{v}) $ when it's not in $ n E (K) $.
+This is, hopefully, already seen in the discussion about $ \mathbb{G}_{m} $.
+Now we add the last piece of the puzzle.
 
 Recall that we have the commutative diagram in which the rows are exact
 \begin{figure}[H]
@@ -317,7 +319,7 @@ $ n: E (K _{v}^{nr})\to E (K _{v}^{nr}) $ is surjective.
 
 \section{Now the Selmer groups}
 
-Now we prove that Selmer groups are finite.
+Finlly we can prove that Selmer groups are finite.
 
 \begin{thm}
 $ \mathrm{Sel}^{n}(E/K) $ is finite.
